@@ -11,6 +11,3 @@ __pycache__/
 
 # Carpeta de subidas o contenido pesado
 uploads/
-
-images/
-database.py/
