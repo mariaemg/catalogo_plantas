@@ -1,0 +1,291 @@
+/* Contenedor principal del detalle */
+.detalle {
+  max-width: 900px;
+  margin: 30px auto;
+  background: #fffefc;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: 'Raleway', sans-serif;
+}
+
+/* Grid de fotos */
+.fotos-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.fotos-grid img {
+  width: 320px;
+  height: 240px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fotos-grid img:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+/* Sección de información del bonsái */
+.main {
+  background: #f2f0ea;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 15px;
+}
+
+.main p {
+  margin: 6px 0;
+  text-align: left;
+  font-size: 15px;
+  color: #333;
+}
+
+/* Botones de navegación */
+.acciones {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.acciones button {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 15px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  background: #2f5d3b;
+  color: #fffefc;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  margin: 0 6px;
+}
+
+.acciones button:hover {
+  background: #3a7040;
+  transform: scale(1.05);
+}
+
+/* Modal de foto ampliada */
+.photo-modal {
+  display: none;
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  overflow: auto;
+}
+
+.photo-modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+  max-width: 90%;
+  height: 600px;
+  max-height: 90%;
+  background: #fffefc;
+  border-radius: 16px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.photo-modal-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.photo-modal-content button {
+  width: 120px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  background: #2f5d3b;
+  color: #fffefc;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.photo-modal-content button:hover {
+  background: #3a7040;
+  transform: scale(1.05);
+}
+
+/* Comentarios */
+.comentarios-titulo {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 28px;
+  color: #2f5d3b;
+  margin-bottom: 20px;
+}
+
+.agregar-comentario-titulo {
+  font-size: 20px;
+  color: #3a7040;
+  margin-top: 25px;
+  margin-bottom: 12px;
+}
+
+/* Lista de comentarios */
+.comentarios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Cada comentario */
+.comentario {
+  background: #fffefc;
+  border-left: 4px solid #2f5d3b;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comentario:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.comentario-header {
+  font-weight: 600;
+  color: #2f5d3b;
+  margin-bottom: 6px;
+}
+
+.comentario-texto {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Paginación de comentarios */
+.paginacion-comentarios {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  font-family: 'Raleway', sans-serif;
+}
+
+.paginacion-comentarios button {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #f2f0ea;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.paginacion-comentarios button:hover:not(:disabled) {
+  background-color: #2f5d3b;
+  color: #fffefc;
+  border-color: #2f5d3b;
+}
+
+.paginacion-comentarios button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.paginacion-comentarios #infoPagina {
+  font-size: 14px;
+  color: #444;
+  font-weight: 500;
+}
+
+/* Formulario agregar comentario */
+.form-comentario {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-comentario input,
+.form-comentario textarea {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-comentario input:focus,
+.form-comentario textarea:focus {
+  outline: none;
+  border-color: #2f5d3b;
+  box-shadow: 0 0 5px rgba(47,93,59,0.3);
+}
+
+.form-comentario button {
+  width: fit-content;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  background: #2f5d3b;
+  color: #fffefc;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.form-comentario button:hover {
+  background: #3a7040;
+  transform: scale(1.05);
+}
+
+.comentarios-errores {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.form-comentario input::placeholder,
+.form-comentario textarea::placeholder {
+  font-family: 'Raleway', sans-serif;
+  color: #999;
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* Mensaje de "no hay comentarios" */
+.comentarios-lista p {
+  background: #e0f0ff;        /* azul muy suave */
+  border: 1px solid #90c4ff; /* azul más intenso para el borde */
+  color: #032286;             /* azul del texto */
+  padding: 12px 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.comentarios-lista p::before {
+  content: "😢";
+}
+

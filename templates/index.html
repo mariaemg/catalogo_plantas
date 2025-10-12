@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo de Bonsáis</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.jpg') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>Catálogo de Bonsáis - FelRod</h1>
+    <p>🌿 Descubre el bonsái ideal para tu espacio 🌿</p>
+  </header>
+
+  <main class="main">
+
+    <!-- Contenedor general para búsqueda y filtros -->
+    <div class="controls">
+
+      <!-- Sección de búsqueda -->
+      <section class="busqueda">
+        <h2>Buscar Bonsáis</h2>
+        <input type="text" id="buscarInput" placeholder="Escribe nombre o tipo de bonsái...">
+      </section>
+
+      <!-- Sección de filtro y ordenar -->
+      <section class="filtros">
+        <h2>Filtrar y Ordenar</h2>
+        <div class="filtros-row">
+          <label for="filtroTipo">Dificultad de cuidado:</label>
+          <select id="filtroTipo">
+            <option value="">Todos</option>
+            <option value="bajo">Bajo</option>
+            <option value="medio">Medio</option>
+            <option value="alto">Alto</option>
+          </select>
+
+          <label for="ordenar">Ordenar por:</label>
+          <select id="ordenar">
+            <option value="nombre_asc">Nombre A-Z</option>
+            <option value="nombre_desc">Nombre Z-A</option>
+            <option value="edad_asc">Edad ↑</option>
+            <option value="edad_desc">Edad ↓</option>
+            <option value="precio_asc">Precio ↑</option>
+            <option value="precio_desc">Precio ↓</option>
+          </select>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Mensaje sobre las tarjetas -->
+    <p class="info-tarjetas">Haz clic en un bonsái para más información 🌱</p>
+
+    <!-- Grid de bonsáis -->
+    <section class="grid-container" id="bonsai-grid">
+      <!-- Aquí se inyectan las tarjetas con JS -->
+    </section>
+
+    <!-- Paginación -->
+    <div class="pagination" id="pagination">
+      <!-- Botones de paginación -->
+    </div>
+
+    <!-- Contacta con nosotros -->
+    <section class="contacto">
+      <h2>¡Ponte en contacto con nosotros!</h2>
+      <div class="contactos-links">
+      <a href="mailto:info@bonsaisfelrod.com?subject=Consulta%20sobre%20bonsáis&body=Hola,%20me%20gustaría%20consultar%20sobre..." target="_blank">
+        <i class="fa-solid fa-envelope"></i> Escríbenos por correo
+      </a>
+      <a href="https://wa.me/56986350132?text=Hola!%20Quisiera%20saber%20más%20sobre%20sus%20bonsáis." target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> Contáctanos por WhatsApp
+      </a>
+      <a href="https://www.instagram.com/felrod.bonsai" target="_blank">
+        <i class="fa-brands fa-instagram"></i> Síguenos en Instagram
+      </a>
+      <a href="https://www.facebook.com" target="_blank">
+        <i class="fa-brands fa-facebook"></i> Síguenos en Facebook
+      </a>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

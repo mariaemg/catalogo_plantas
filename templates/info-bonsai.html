@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Información del Bonsái</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.jpg') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/info.css') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Información del Bonsái</h1>
+  </div>
+
+  <div class="detalle">
+    <h2>{{ bonsai.nombre }} - {{ bonsai.tipo }} / {{ bonsai.edad }} años</h2>
+
+    <div class="main">
+      <p><strong>Dificultad de Cuidado:</strong> {{ bonsai.tipo_cuidado }}</p>
+      <p><strong>Edad:</strong> {{ bonsai.edad }} años</p>
+      <p><strong>Altura:</strong> {{ bonsai.altura }} cm</p>
+      <p><strong>Precio:</strong> ${{ bonsai.precio }}</p>
+      <p><strong>Descripción:</strong> {{ bonsai.descripcion }}</p>
+    </div>
+
+    <!-- Fotos -->
+    <h3 style="text-align:center; margin-top:18px;">Fotos (click para ampliar)</h3>
+    <div class="fotos-grid" id="fotosGrid">
+      {% for foto in bonsai.fotos %}
+        <img src="{{ url_for('static', filename='uploads/' ~ foto) }}" alt="Foto {{ loop.index }}">
+      {% endfor %}
+    </div>
+
+    <!-- Comentarios -->
+    <div class="comentarios">
+      <h2 class="comentarios-titulo">💬 Comentarios</h2>
+
+      <div id="comentariosList" class="comentarios-lista">
+        <!-- Comentarios se inyectan con JS -->
+      </div>
+
+      <div id="paginacionComentarios" class="paginacion-comentarios">
+        <button id="prevPagina">Anterior</button>
+        <span id="infoPagina"></span>
+        <button id="nextPagina">Siguiente</button>
+      </div>
+
+      <h3 class="agregar-comentario-titulo">Agregar comentario</h3>
+      <form id="formComentario" action="{{ url_for('agregar_comentario', bonsai_id=bonsai.id) }}" method="POST" novalidate class="form-comentario">
+        <input type="text" id="nombre" placeholder="Nombre" required minlength="3" maxlength="80">
+        <textarea id="texto" placeholder="Comentario" rows="4" required minlength="5"></textarea>
+        <button type="submit">Agregar comentario</button>
+        <div id="comentariosErrores" class="comentarios-errores"></div>
+      </form>
+    </div>
+
+    <!-- Navegación -->
+    <div class="acciones">
+      <button id="btnPortada">Volver al catálogo</button>
+    </div>
+  </div>
+
+  <!-- Modal para foto grande -->
+  <div class="photo-modal" id="photoModal">
+    <div class="photo-modal-content">
+      <img id="fotoGrande" src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Foto ampliada">
+      <button id="cerrarFoto">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Pasar el id del bonsái al JS -->
+  <script>const bonsaiId = {{ bonsai.id }};
+          const bonsaiFotos = {{ bonsaiFotos|tojson|safe }};
+  </script>
+  <script src="{{ url_for('static', filename='js/info-bonsai.js') }}"></script>
+</body>
+</html>
