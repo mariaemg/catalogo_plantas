@@ -1,0 +1,7 @@
+LOAD DATABASE
+     FROM mysql://bonsai_user:G7v!p9Rz#2qL8mT4@host.docker.internal:3306/bonsais_db
+     INTO postgresql://u48b73du5qhbbr:p95a33c52489e08b3bc9ed004a7ab1d1984d51a374cb0000a533d827ae7423dbe@ec2-54-209-55-28.compute-1.amazonaws.com:5432/d7kg9v3vag7li7?sslmode=require
+
+ WITH include no drop, create tables, create indexes, reset sequences
+
+ SET work_mem to '16MB', maintenance_work_mem to '512 MB';
