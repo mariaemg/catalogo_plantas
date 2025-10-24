@@ -13,11 +13,11 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if not DATABASE_URL:
     # fallback local
-    DB_USER = os.environ.get("DB_USER", "bonsai_user")
-    DB_PASS = os.environ.get("DB_PASS", "G7v!p9Rz#2qL8mT4")
-    DB_HOST = os.environ.get("DB_HOST", "localhost")
-    DB_PORT = os.environ.get("DB_PORT", 3306)
-    DB_NAME = os.environ.get("DB_NAME", "bonsais_db")
+    DB_USER = os.environ.get("DB_USER")
+    DB_PASS = os.environ.get("DB_PASS")
+    DB_HOST = os.environ.get("DB_HOST")
+    DB_PORT = os.environ.get("DB_PORT")
+    DB_NAME = os.environ.get("DB_NAME")
     DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 if DATABASE_URL.startswith("postgres://"):
