@@ -37,7 +37,7 @@ function renderPage(page) {
     div.className = "bonsai-card";
 
     const imagen = bonsai.fotos && bonsai.fotos.length > 0
-      ? bonsai.fotos[0]
+      ? bonsai.fotos[1]
       : "/static/img/default-bonsai.jpg";
 
     div.innerHTML = `
