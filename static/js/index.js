@@ -50,7 +50,7 @@ function renderPage(page) {
     } else {
     // Cualquier otro id, usar la primera foto si existe
       imagen = bonsai.fotos && bonsai.fotos.length > 0
-        ? bonsai.fotos[0]
+        ? bonsai.fotos[3]
         : "/static/img/default-bonsai.jpg";
     }
 
