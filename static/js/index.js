@@ -1,4 +1,4 @@
-// Referencias a elementos del DOM
+// === Referencias a elementos del DOM ===
 const grid = document.getElementById("bonsai-grid");
 const pagination = document.getElementById("pagination");
 const buscarInput = document.getElementById("buscarInput");
@@ -10,18 +10,17 @@ let bonsais = [];
 let filteredBonsais = [];
 let currentPage = 1;
 
-// Cargar bonsáis desde la API
+// === Cargar bonsáis desde la API ===
 fetch("/api/bonsais")
   .then(response => response.json())
   .then(data => {
     bonsais = data;
     filteredBonsais = bonsais;
-    renderPage(currentPage);
-    renderPagination();
+    filtrarYOrdenar(); // render inicial con filtrado y orden
   })
   .catch(err => console.error("Error cargando bonsáis:", err));
 
-// === Función para renderizar las tarjetas ===
+// === Función para renderizar las tarjetas de bonsáis ===
 function renderPage(page) {
   grid.innerHTML = "";
   const start = (page - 1) * itemsPerPage;
@@ -37,15 +36,15 @@ function renderPage(page) {
     const div = document.createElement("div");
     div.className = "bonsai-card";
 
-    // Tomamos la primera foto si existe
     const imagen = bonsai.fotos && bonsai.fotos.length > 0
-      ? bonsai.fotos[0]   // <-- ahora sí, ya es la ruta directamente
-      : "/static/img/default-bonsai.jpg"; // Imagen por defecto si no hay fotos
+      ? bonsai.fotos[0]
+      : "/static/img/default-bonsai.jpg";
 
     div.innerHTML = `
       <img src="${imagen}" alt="${bonsai.nombre}">
       <h3>${bonsai.nombre}</h3>
       <p>${bonsai.tipo} • ${bonsai.edad} años</p>
+      <p class="dificultad">Dificultad: ${bonsai.dificultad_cuidado || "N/A"}</p>
       <p class="precio">Precio: ${bonsai.precio ? `$${bonsai.precio}` : "Consultar"}</p>
     `;
 
@@ -70,45 +69,39 @@ function renderPagination() {
       currentPage = i;
       renderPage(currentPage);
       renderPagination();
+      window.scrollTo({ top: 0, behavior: "smooth" }); // subir al inicio
     });
     pagination.appendChild(btn);
   }
 }
 
-// === Filtrado y orden dinámico ===
+// === Función para filtrar y ordenar bonsáis ===
 function filtrarYOrdenar() {
-  const tipo = filtroTipo.value;
+  const tipo = filtroTipo.value.toLowerCase();
   const orden = ordenarSelect.value;
   const busqueda = buscarInput.value.toLowerCase();
 
+  // Filtrar
   filteredBonsais = bonsais.filter(b => {
-    const coincideTipo = tipo === "" || b.tipo_cuidado.toLowerCase() === tipo.toLowerCase();
+    const coincideTipo = !tipo || (b.dificultad_cuidado || "").toLowerCase() === tipo;
     const coincideBusqueda =
       b.nombre.toLowerCase().includes(busqueda) ||
       b.tipo.toLowerCase().includes(busqueda);
     return coincideTipo && coincideBusqueda;
   });
 
-  switch (orden) {
-    case "nombre_asc":
-      filteredBonsais.sort((a, b) => a.nombre.localeCompare(b.nombre));
-      break;
-    case "nombre_desc":
-      filteredBonsais.sort((a, b) => b.nombre.localeCompare(a.nombre));
-      break;
-    case "edad_asc":
-      filteredBonsais.sort((a, b) => a.edad - b.edad);
-      break;
-    case "edad_desc":
-      filteredBonsais.sort((a, b) => b.edad - a.edad);
-      break;
-    case "precio_asc":
-      filteredBonsais.sort((a, b) => (a.precio || 0) - (b.precio || 0));
-      break;
-    case "precio_desc":
-      filteredBonsais.sort((a, b) => (b.precio || 0) - (a.precio || 0));
-      break;
-  }
+  // Ordenar
+  filteredBonsais.sort((a, b) => {
+    switch (orden) {
+      case "nombre_asc": return a.nombre.localeCompare(b.nombre);
+      case "nombre_desc": return b.nombre.localeCompare(a.nombre);
+      case "edad_asc": return a.edad - b.edad;
+      case "edad_desc": return b.edad - a.edad;
+      case "precio_asc": return (a.precio || 0) - (b.precio || 0);
+      case "precio_desc": return (b.precio || 0) - (a.precio || 0);
+      default: return 0;
+    }
+  });
 
   currentPage = 1;
   renderPage(currentPage);
@@ -116,6 +109,6 @@ function filtrarYOrdenar() {
 }
 
 // === Eventos ===
-buscarInput.addEventListener("keyup", filtrarYOrdenar);
-filtroTipo.addEventListener("change", filtrarYOrdenar);
-ordenarSelect.addEventListener("change", filtrarYOrdenar);
+if (buscarInput) buscarInput.addEventListener("input", filtrarYOrdenar);
+if (filtroTipo) filtroTipo.addEventListener("change", filtrarYOrdenar);
+if (ordenarSelect) ordenarSelect.addEventListener("change", filtrarYOrdenar);
