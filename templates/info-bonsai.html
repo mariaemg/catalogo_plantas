@@ -33,10 +33,9 @@
     <!-- Fotos -->
     <h3 style="text-align:center; margin-top:18px;">Fotos (click para ampliar)</h3>
     <div class="fotos-grid" id="fotosGrid">
-      {% for foto in bonsai.fotos %}
-        <img src="{{ url_for('static', filename='uploads/' ~ foto) }}" alt="Foto {{ loop.index }}">
-      {% endfor %}
+    <!-- Las fotos se insertan con JS -->
     </div>
+
 
     <!-- Comentarios -->
     <div class="comentarios">
