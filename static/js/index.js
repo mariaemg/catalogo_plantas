@@ -45,7 +45,12 @@ function renderPage(page) {
     } else if (bonsai.id === 5) {
     // Foto 3 (índice 2)
       imagen = bonsai.fotos && bonsai.fotos.length > 2
-        ? bonsai.fotos[2]
+        ? bonsai.fotos[4]
+        : "/static/img/default-bonsai.jpg";
+    } else if (bonsai.id === 3) {
+    // Foto 3 (índice 2)
+      imagen = bonsai.fotos && bonsai.fotos.length > 2
+        ? bonsai.fotos[5]
         : "/static/img/default-bonsai.jpg";
     } else {
     // Cualquier otro id, usar la primera foto si existe
