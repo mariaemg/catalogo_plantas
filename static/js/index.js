@@ -36,9 +36,23 @@ function renderPage(page) {
     const div = document.createElement("div");
     div.className = "bonsai-card";
 
-    const imagen = bonsai.fotos && bonsai.fotos.length > 0
-      ? bonsai.fotos[3]
-      : "/static/img/default-bonsai.jpg";
+    let imagen;
+    if (bonsai.id === 2) {
+    // Foto 5 (índice 4)
+      imagen = bonsai.fotos && bonsai.fotos.length > 4
+        ? bonsai.fotos[4]
+        : "/static/img/default-bonsai.jpg";
+    } else if (bonsai.id === 5) {
+    // Foto 3 (índice 2)
+      imagen = bonsai.fotos && bonsai.fotos.length > 2
+        ? bonsai.fotos[2]
+        : "/static/img/default-bonsai.jpg";
+    } else {
+    // Cualquier otro id, usar la primera foto si existe
+      imagen = bonsai.fotos && bonsai.fotos.length > 0
+        ? bonsai.fotos[0]
+        : "/static/img/default-bonsai.jpg";
+    }
 
     div.innerHTML = `
       <img src="${imagen}" alt="${bonsai.nombre}">
