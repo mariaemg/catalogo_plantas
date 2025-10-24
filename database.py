@@ -1,31 +1,51 @@
 import os
+import time
 from datetime import datetime
-from sqlalchemy import (
-    create_engine, String, Integer, DateTime, Text, ForeignKey
-)
+from sqlalchemy import create_engine, String, Integer, DateTime, Text, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, Session
 
 # ---------------- BASE DECLARATIVA ----------------
 class Base(DeclarativeBase):
     pass
 
-# ---------------- CONEXIÓN Y SESIÓN ----------------
-def getSession():
-    DATABASE_URL = os.environ.get("DATABASE_URL")
+# ---------------- CONEXIÓN Y SESIÓN GLOBAL ----------------
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
-    if not DATABASE_URL:
-        DB_USER = os.environ.get("DB_USER")
-        DB_PASS = os.environ.get("DB_PASS")
-        DB_HOST = os.environ.get("DB_HOST", "localhost")
-        DB_PORT = os.environ.get("DB_PORT", 3306)
-        DB_NAME = os.environ.get("DB_NAME")
-        DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+if not DATABASE_URL:
+    # fallback local
+    DB_USER = os.environ.get("DB_USER", "bonsai_user")
+    DB_PASS = os.environ.get("DB_PASS", "G7v!p9Rz#2qL8mT4")
+    DB_HOST = os.environ.get("DB_HOST", "localhost")
+    DB_PORT = os.environ.get("DB_PORT", 3306)
+    DB_NAME = os.environ.get("DB_NAME", "bonsais_db")
+    DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-    if DATABASE_URL.startswith("postgres://"):
-        DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+psycopg2://", 1)
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+psycopg2://", 1)
 
-    engine = create_engine(DATABASE_URL, echo=True)
-    return Session(engine)
+# Engine global con pool
+engine = create_engine(
+    DATABASE_URL,
+    echo=True,
+    pool_size=5,          # máximo de conexiones simultáneas
+    max_overflow=2,       # conexiones extra temporales
+    pool_timeout=30,      # espera máximo para conexión
+    pool_recycle=1800     # cierra conexiones viejas automáticamente
+)
+
+# Session global
+SessionLocal = Session(engine)
+
+# Función para obtener sesión con retry
+def getSession(retries=3, delay=0.5):
+    for attempt in range(retries):
+        try:
+            return SessionLocal
+        except Exception as e:
+            if attempt < retries - 1:
+                time.sleep(delay * (attempt + 1))  # backoff exponencial
+            else:
+                raise e
 
 # ------------------ MODELOS ------------------
 
@@ -35,21 +55,17 @@ class Bonsai(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     nombre: Mapped[str] = mapped_column(String(200), nullable=False)
     tipo: Mapped[str] = mapped_column(String(100), nullable=False)
-    edad: Mapped[int] = mapped_column(Integer, nullable=False)  # años totales
-    entrenamiento: Mapped[int] = mapped_column(Integer, nullable=True)  # años como bonsái
-    altura: Mapped[int] = mapped_column(Integer, nullable=True)  # cm
-    ancho: Mapped[int] = mapped_column(Integer, nullable=True)  # cm
-    maceta: Mapped[str] = mapped_column(String(100), nullable=True)  # cerámica o plástica
-    dificultad_cuidado: Mapped[str] = mapped_column(String(20), nullable=True)  # Bajo / Medio / Alto
+    edad: Mapped[int] = mapped_column(Integer, nullable=False)
+    entrenamiento: Mapped[int] = mapped_column(Integer, nullable=True)
+    altura: Mapped[int] = mapped_column(Integer, nullable=True)
+    ancho: Mapped[int] = mapped_column(Integer, nullable=True)
+    maceta: Mapped[str] = mapped_column(String(100), nullable=True)
+    dificultad_cuidado: Mapped[str] = mapped_column(String(20), nullable=True)
     descripcion: Mapped[str] = mapped_column(Text, nullable=True)
     precio: Mapped[int] = mapped_column(Integer, nullable=True)
 
-    fotos: Mapped[list["Foto"]] = relationship(
-        back_populates="bonsai", cascade="all, delete-orphan"
-    )
-    comentarios: Mapped[list["Comentario"]] = relationship(
-        back_populates="bonsai", cascade="all, delete-orphan"
-    )
+    fotos: Mapped[list["Foto"]] = relationship(back_populates="bonsai", cascade="all, delete-orphan")
+    comentarios: Mapped[list["Comentario"]] = relationship(back_populates="bonsai", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
