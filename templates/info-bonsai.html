@@ -17,12 +17,15 @@
   </div>
 
   <div class="detalle">
-    <h2>{{ bonsai.nombre }} - {{ bonsai.tipo }} / {{ bonsai.edad }} años</h2>
+    <h2>{{ bonsai.nombre }} - {{ bonsai.tipo }}</h2>
 
     <div class="main">
       <p><strong>Dificultad de Cuidado:</strong> {{ bonsai.tipo_cuidado }}</p>
-      <p><strong>Edad:</strong> {{ bonsai.edad }} años</p>
+      <p><strong>Edad:</strong> {{ bonsai.edad }} años aprox</p>
+      <p><strong>Entrenamiento:</strong> {{ bonsai.entrenamiento }} años como bonsái</p>
       <p><strong>Altura:</strong> {{ bonsai.altura }} cm</p>
+      <p><strong>Ancho:</strong> {{ bonsai.ancho }} cm</p>
+      <p><strong>Maceta:</strong> {{ bonsai.maceta }}</p>
       <p><strong>Precio:</strong> ${{ bonsai.precio }}</p>
       <p><strong>Descripción:</strong> {{ bonsai.descripcion }}</p>
     </div>
@@ -73,8 +76,9 @@
   </div>
 
   <!-- Pasar el id del bonsái al JS -->
-  <script>const bonsaiId = {{ bonsai.id }};
-          const bonsaiFotos = {{ bonsaiFotos|tojson|safe }};
+  <script>
+    const bonsaiId = {{ bonsai.id }};
+    const bonsaiFotos = {{ bonsaiFotos|tojson|safe }};
   </script>
   <script src="{{ url_for('static', filename='js/info-bonsai.js') }}"></script>
 </body>
