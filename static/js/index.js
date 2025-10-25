@@ -37,25 +37,46 @@ function renderPage(page) {
     div.className = "bonsai-card";
 
     let imagen;
-    if (bonsai.id === 2) {
-    // Foto 5 (índice 4)
+
+    if (bonsai.id === 1) {
+      // Foto índice 3
+      imagen = bonsai.fotos && bonsai.fotos.length > 3
+        ? bonsai.fotos[3]
+        : "/static/img/default-bonsai.jpg";
+    } else if (bonsai.id === 2) {
+      // Foto índice 0
+      imagen = bonsai.fotos && bonsai.fotos.length > 0
+        ? bonsai.fotos[0]
+        : "/static/img/default-bonsai.jpg";
+    } else if (bonsai.id === 3) {
+      // Foto índice 5
+      imagen = bonsai.fotos && bonsai.fotos.length > 5
+        ? bonsai.fotos[5]
+        : "/static/img/default-bonsai.jpg";
+    } else if (bonsai.id === 4) {
+      // Foto índice 3
+      imagen = bonsai.fotos && bonsai.fotos.length > 3
+        ? bonsai.fotos[3]
+        : "/static/img/default-bonsai.jpg";
+    } else if (bonsai.id === 5) {
+      // Foto índice 5
+      imagen = bonsai.fotos && bonsai.fotos.length > 5
+        ? bonsai.fotos[5]
+        : "/static/img/default-bonsai.jpg";
+    } else if (bonsai.id === 6) {
+      // Foto índice 4
       imagen = bonsai.fotos && bonsai.fotos.length > 4
         ? bonsai.fotos[4]
         : "/static/img/default-bonsai.jpg";
-    } else if (bonsai.id === 5) {
-    // Foto 3 (índice 2)
-      imagen = bonsai.fotos && bonsai.fotos.length > 2
-        ? bonsai.fotos[4]
-        : "/static/img/default-bonsai.jpg";
-    } else if (bonsai.id === 3) {
-    // Foto 3 (índice 2)
-      imagen = bonsai.fotos && bonsai.fotos.length > 2
-        ? bonsai.fotos[5]
+    } else if (bonsai.id === 7) {
+      // Foto índice 0
+      imagen = bonsai.fotos && bonsai.fotos.length > 0
+        ? bonsai.fotos[0]
         : "/static/img/default-bonsai.jpg";
     } else {
-    // Cualquier otro id, usar la primera foto si existe
+      // Cualquier otro id → primera foto si existe
       imagen = bonsai.fotos && bonsai.fotos.length > 0
-        ? bonsai.fotos[3]
+        ? bonsai.fotos[0]
         : "/static/img/default-bonsai.jpg";
     }
 
@@ -63,7 +84,7 @@ function renderPage(page) {
       <img src="${imagen}" alt="${bonsai.nombre}">
       <h3>${bonsai.nombre}</h3>
       <p>${bonsai.tipo} • ${bonsai.edad} años</p>
-      <p class="dificultad">Dificultad: ${bonsai.dificultad_cuidado || "N/A"}</p>
+      <p class="dificultad">Dificultad de Cuidado: ${bonsai.dificultad_cuidado || "N/A"}</p>
       <p class="precio">Precio: ${bonsai.precio ? `$${bonsai.precio}` : "Consultar"}</p>
     `;
 
