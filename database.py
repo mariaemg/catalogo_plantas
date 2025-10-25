@@ -27,6 +27,7 @@ if DATABASE_URL.startswith("postgres://"):
 engine = create_engine(
     DATABASE_URL,
     echo=True,
+    pool_pre_ping=True,
     pool_size=5,          # máximo de conexiones simultáneas
     max_overflow=2,       # conexiones extra temporales
     pool_timeout=30,      # espera máximo para conexión

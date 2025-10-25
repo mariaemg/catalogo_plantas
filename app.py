@@ -21,6 +21,11 @@ def create_app():
         with getSession() as session:
             bonsais = session.query(Bonsai).options(selectinload(Bonsai.fotos)).all()
         return render_template("index.html", bonsais=bonsais)
+    
+    @app.route("/ping")
+    def ping():
+        return "OK", 200
+
 
     # --- Página detalle bonsái ---
     @app.route("/bonsai/<int:bonsai_id>")
