@@ -26,7 +26,6 @@ def create_app():
     def ping():
         return "OK", 200
 
-
     # --- Página detalle bonsái ---
     @app.route("/bonsai/<int:bonsai_id>")
     def detalle_bonsai(bonsai_id):
