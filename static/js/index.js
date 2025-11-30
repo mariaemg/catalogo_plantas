@@ -32,53 +32,33 @@ function renderPage(page) {
     return;
   }
 
+  const fotoSeleccion = {
+    1: 3,
+    2: 0,
+    3: 5,
+    4: 3,
+    5: 5,
+    6: 4,
+    7: 0,
+
+    8: 2,   // muestra la foto 3
+    9: 4,   // muestra la 5
+    10: 4,  // muestra la 5
+    11: 0,  // muestra la 1
+    12: 4,  // muestra la 5
+    13: 3   // muestra la 4
+  };
+
   pageItems.forEach(bonsai => {
     const div = document.createElement("div");
     div.className = "bonsai-card";
 
-    let imagen;
+    const index = fotoSeleccion[bonsai.id] ?? 0;
 
-    if (bonsai.id === 1) {
-      // Foto índice 3
-      imagen = bonsai.fotos && bonsai.fotos.length > 3
-        ? bonsai.fotos[3]
-        : "/static/img/default-bonsai.jpg";
-    } else if (bonsai.id === 2) {
-      // Foto índice 0
-      imagen = bonsai.fotos && bonsai.fotos.length > 0
-        ? bonsai.fotos[0]
-        : "/static/img/default-bonsai.jpg";
-    } else if (bonsai.id === 3) {
-      // Foto índice 5
-      imagen = bonsai.fotos && bonsai.fotos.length > 5
-        ? bonsai.fotos[5]
-        : "/static/img/default-bonsai.jpg";
-    } else if (bonsai.id === 4) {
-      // Foto índice 3
-      imagen = bonsai.fotos && bonsai.fotos.length > 3
-        ? bonsai.fotos[3]
-        : "/static/img/default-bonsai.jpg";
-    } else if (bonsai.id === 5) {
-      // Foto índice 5
-      imagen = bonsai.fotos && bonsai.fotos.length > 5
-        ? bonsai.fotos[5]
-        : "/static/img/default-bonsai.jpg";
-    } else if (bonsai.id === 6) {
-      // Foto índice 4
-      imagen = bonsai.fotos && bonsai.fotos.length > 4
-        ? bonsai.fotos[4]
-        : "/static/img/default-bonsai.jpg";
-    } else if (bonsai.id === 7) {
-      // Foto índice 0
-      imagen = bonsai.fotos && bonsai.fotos.length > 0
-        ? bonsai.fotos[0]
-        : "/static/img/default-bonsai.jpg";
-    } else {
-      // Cualquier otro id → primera foto si existe
-      imagen = bonsai.fotos && bonsai.fotos.length > 0
-        ? bonsai.fotos[0]
-        : "/static/img/default-bonsai.jpg";
-    }
+    const imagen = bonsai.fotos && bonsai.fotos.length > index
+      ? bonsai.fotos[index]
+      : "/static/img/default-bonsai.jpg";
+
 
     div.innerHTML = `
       <img src="${imagen}" alt="${bonsai.nombre}">
