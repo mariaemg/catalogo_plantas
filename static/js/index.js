@@ -5,7 +5,7 @@ const buscarInput = document.getElementById("buscarInput");
 const filtroTipo = document.getElementById("filtroTipo");
 const ordenarSelect = document.getElementById("ordenar");
 
-const itemsPerPage = 6;
+const itemsPerPage = 8;
 let bonsais = [];
 let filteredBonsais = [];
 let currentPage = 1;
