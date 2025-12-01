@@ -41,12 +41,12 @@ function renderPage(page) {
     6: 4,
     7: 0,
 
-    8: 2,   // muestra la foto 3
-    9: 4,   // muestra la 5
-    10: 4,  // muestra la 5
-    11: 0,  // muestra la 1
-    12: 4,  // muestra la 5
-    13: 3   // muestra la 4
+    8: 5,
+    9: 5, 
+    10: 5,
+    11: 6,
+    12: 4,
+    13: 3
   };
 
   pageItems.forEach(bonsai => {
