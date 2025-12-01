@@ -50,8 +50,12 @@ function renderPage(page) {
   };
 
   pageItems.forEach(bonsai => {
-    const div = document.createElement("div");
-    div.className = "bonsai-card";
+
+    const link = document.createElement("a");
+    link.href = `/bonsai/${bonsai.id}`;
+    link.className = "bonsai-card";
+    link.style.textDecoration = "none";
+    link.style.color = "inherit";
 
     const index = fotoSeleccion[bonsai.id] ?? 0;
 
@@ -59,8 +63,7 @@ function renderPage(page) {
       ? bonsai.fotos[index]
       : "/static/img/default-bonsai.jpg";
 
-
-    div.innerHTML = `
+    link.innerHTML = `
       <img src="${imagen}" alt="${bonsai.nombre}">
       <h3>${bonsai.nombre}</h3>
       <p>${bonsai.tipo} • ${bonsai.edad} años</p>
@@ -68,12 +71,9 @@ function renderPage(page) {
       <p class="precio">Precio: ${bonsai.precio ? `$${bonsai.precio}` : "Consultar"}</p>
     `;
 
-    div.addEventListener("click", () => {
-      window.location.href = `/bonsai/${bonsai.id}`;
-    });
-
-    grid.appendChild(div);
+    grid.appendChild(link);
   });
+
 }
 
 // === Función para crear los botones de paginación ===
